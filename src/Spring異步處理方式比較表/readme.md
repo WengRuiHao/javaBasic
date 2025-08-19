@@ -27,3 +27,45 @@ Spring 提供多種異步與排程處理方式，以下整理各種技術的用�
 - **跨系統事件傳遞 / 異步解耦** → 消息佇列（Kafka / RabbitMQ / ActiveMQ）
 
 ---
+## 🔹 1. `@Async`（Spring 最基本的異步方法）
+👉 適合：簡單的「非同步呼叫」，例如寄信、打 API、寫 log。
+- **原理：**
+  - Spring 在背景幫你建立一個 ThreadPoolTaskExecutor（執行緒池）。
+  - 你在方法上加 @Async → Spring 會把這個方法丟到執行緒池執行，而不是阻塞當前主執行緒。
+- **使用方式：**
+```dbn-psql
+@Service
+public class MailService {
+    @Async
+    public void sendEmail(String user) {
+        System.out.println("寄送信件給 " + user + " 由 " + Thread.currentThread().getName());
+    }
+}
+```
+```dbn-psql
+@SpringBootApplication
+@EnableAsync // 開啟 @Async 支援
+public class DemoApplication {}
+```
+- **效果：**
+  - 呼叫`mailService.sendEmail("小明")`時，會在背景執行，不會卡住主線程。
+## 🔹 2. `CompletableFuture` + `@Async`
+👉 適合：需要拿到非同步任務「回傳結果」的情境。
+- **為什麼要搭配 `CompletableFuture`？**
+  - `@Async` 預設回傳 `voi`d，你不知道任務什麼時候結束。
+  - 如果方法回傳 CompletableFuture<T>，就可以用 .get() 或 .thenApply() 拿到結果。
+- **範例:**
+```dbn-psql
+@Service
+public class UserService {
+    @Async
+    public CompletableFuture<String> findUser(String id) throws InterruptedException {
+        Thread.sleep(2000);
+        return CompletableFuture.completedFuture("User-" + id);
+    }
+}
+```
+```dbn-psql
+CompletableFuture<String> result = userService.findUser("123");
+result.thenAccept(user -> System.out.println("查到使用者：" + user));
+```
