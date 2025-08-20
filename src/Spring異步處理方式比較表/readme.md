@@ -52,8 +52,8 @@ public class DemoApplication {}
 ## 🔹 2. `CompletableFuture` + `@Async`
 👉 適合：需要拿到非同步任務「回傳結果」的情境。
 - **為什麼要搭配 `CompletableFuture`？**
-  - `@Async` 預設回傳 `voi`d，你不知道任務什麼時候結束。
-  - 如果方法回傳 CompletableFuture<T>，就可以用 .get() 或 .thenApply() 拿到結果。
+  - `@Async` 預設回傳 `void，你不知道任務什麼時候結束。
+  - 如果方法回傳 `CompletableFuture<T>`，就可以用 `.get()` 或 `.thenApply()` 拿到結果。
 - **範例:**
 ```dbn-psql
 @Service
