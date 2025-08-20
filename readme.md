@@ -1,5 +1,5 @@
 ### 1. Executor 與執行緒池 和 Future 與非同步任務
-- [Java Executor 常見執行緒池](src/Java%20Executor%20常見執行緒池/readme.md)
+- [Java Executor 常見執行緒池](src/main/java/com/javaBasic/javaBasic/threadpool/readme.md)
     - FixedThreadPool / CachedThreadPool / SingleThreadExecutor
     - ScheduledThreadPool / WorkStealingPool
     - 各種池子的特性、適用場景與風險
