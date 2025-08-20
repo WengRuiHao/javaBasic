@@ -40,13 +40,72 @@
 | Checked Exception | 不可丟 | 可丟 |
 | 使用方式 | `new Thread(runnable).start()`<br>`executor.execute(runnable)` | `executor.submit(callable)`，回傳 `Future` |
 
-### 📌 範例
+## 📌 Callable實務應用場景
+**1️⃣ 平行計算 → 等結果匯總**  
+場景：查詢報表，需要同時從「訂單系統」、「物流系統」、「支付系統」拿資料，最後合併。
 ```java
-// Runnable
-Runnable task1 = () -> System.out.println("Runnable 任務執行");
-new Thread(task1).start();
+Future<Order> order = pool.submit(this::getOrder);
+Future<Logistics> logistics = pool.submit(this::getLogistics);
+Future<Payment> payment = pool.submit(this::getPayment);
 
-// Callable
-Callable<Integer> task2 = () -> 1 + 2 + 3;
-Future<Integer> future = Executors.newSingleThreadExecutor().submit(task2);
-System.out.println("結果: " + future.get());
+OrderReport report = new OrderReport(order.get(), logistics.get(), payment.get());
+```
+👉 `future.get()` 會阻塞，直到任務完成，確保資料一致性。
+
+--- 
+
+**2️⃣ API 呼叫 → 限時等待**  
+場景：呼叫外部 API（例如支付系統），不允許無限等待。
+```java
+Future<String> apiFuture = pool.submit(() -> callExternalAPI());
+
+try {
+    String response = apiFuture.get(2, TimeUnit.SECONDS); // 最多等 2 秒
+    System.out.println("API 回應: " + response);
+} catch (TimeoutException e) {
+    System.out.println("超時，走預設邏輯");
+}
+```
+👉 避免外部系統卡死，保護自己服務。
+
+---
+
+**3️⃣ 使用者取消長任務**
+場景：使用者查詢大報表，但中途關閉頁面 → 沒必要繼續計算。
+```java
+Future<?> reportTask = pool.submit(this::generateReport);
+
+// 使用者取消操作時
+reportTask.cancel(true);
+```
+👉 節省系統資源，避免做白工。
+
+---
+
+**4️⃣ 批次處理 → 等待全部完成**
+場景：批次下載檔案，全部完成後再壓縮。
+```java
+List<Future<File>> futures = urls.stream()
+    .map(url -> pool.submit(() -> downloadFile(url)))
+    .toList();
+
+List<File> files = new ArrayList<>();
+for (Future<File> f : futures) {
+    files.add(f.get()); // 阻塞等待
+}
+
+zipFiles(files); // 全部完成後壓縮
+```
+👉 確保所有子任務完成後，才能執行後續流程。
+
+---
+
+## 📌 Future 小結
+
+| 場景       | 用法                        | 說明                                     |
+|------------|-----------------------------|------------------------------------------|
+| 平行計算   | `future.get()`              | 阻塞等待，合併多個結果                   |
+| API 呼叫   | `future.get(timeout, unit)` | 限時等待，超時丟 `TimeoutException`     |
+| 使用者取消 | `future.cancel(true)`       | 中斷長任務，避免浪費資源                 |
+| 批次處理   | 多個 Future + `get()`       | 等全部子任務完成，再做後續處理           |
+
