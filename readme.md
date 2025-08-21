@@ -1,5 +1,5 @@
 ### 1. Executor 與執行緒池 和 Future 與非同步任務
-- [Java Executor 常見執行緒池](src/main/java/com/javaBasic/javaBasic/threadpool/readme.md)
+- [Java Executor 常見執行緒池](src/main/java/com/javaBasic/javaBasic/threadpool)
     - FixedThreadPool / CachedThreadPool / SingleThreadExecutor
     - ScheduledThreadPool / WorkStealingPool
     - 各種池子的特性、適用場景與風險
@@ -13,3 +13,6 @@
     - `@Async` 與 ThreadPoolTaskExecutor
     - `@Scheduled` 與 ThreadPoolTaskScheduler
     - WebFlux 的 NIO EventLoop 模型  
+
+### 3. 常見的併發設計模式
+  [Java 多執行緒程式設計](src/main/java/com/javaBasic/javaBasic/concurrent)
