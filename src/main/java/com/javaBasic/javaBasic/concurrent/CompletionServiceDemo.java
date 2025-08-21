@@ -13,8 +13,11 @@ public class CompletionServiceDemo {
                 .forEach(i -> {
                     cs.submit(() -> {
                         try {
-                            Thread.sleep((long) (Math.random() * 2000));
-                            return "任務 " + i + " 完成";
+                            String tName = Thread.currentThread().getName();
+                            long time = (long) (Math.random() * 2000);
+                            Thread.sleep(time);
+                            System.out.println(time);
+                            return tName + "任務 " + i + " 完成";
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
