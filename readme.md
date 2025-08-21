@@ -15,4 +15,9 @@
     - WebFlux 的 NIO EventLoop 模型  
 
 ### 3. 常見的併發設計模式
-  [Java 多執行緒程式設計](src/main/java/com/javaBasic/javaBasic/concurrent)
+- [Java 多執行緒程式設計](src/main/java/com/javaBasic/javaBasic/concurrent)
+  - 生產者–消費者模式（BlockingQueue）
+  - 工作竊取 (Work Stealing)
+  - Future + CompletionService 處理批量任務
+  - Atomic 類 (無鎖計數器)
+  - 併發集合
