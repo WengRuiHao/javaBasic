@@ -22,6 +22,7 @@
   - Atomic 類 (無鎖計數器)
   - 併發集合
 ### 4. RabbitMQ 應用
+![MessageQueue比較圖](src/RabbitMQ/MessageQueue.png)
 - [系統調用方式與消息中介概念整理](src/RabbitMQ)
   - 同步調用 (Synchronous Call) 和 異步調用 (Asynchronous Call)
   - RabbitMQ 的重要名詞與概念
