@@ -21,3 +21,5 @@
   - Future + CompletionService 處理批量任務
   - Atomic 類 (無鎖計數器)
   - 併發集合
+### 4. RabbitMQ 應用
+- [RabbitMQ 異步處理](src/RabbitMQ)
