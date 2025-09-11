@@ -16,7 +16,7 @@
     <description>Demo project for Spring Boot</description>
 
     <modules>
-        <module>RabbitMQ</module>
+        <module>rabbitMQ</module>
     </modules>
 
     <url/>
