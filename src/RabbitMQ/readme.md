@@ -48,14 +48,14 @@
 ![RabbitMQ 架構示意圖](RabbitMQ.png)
 
 ### 名詞解釋
-- **Producer (生產者)**：產生訊息並發送到 Exchange。
+- **Publisher (生產者)**：產生訊息並發送到 Exchange。
 - **Exchange (交換器)**：根據規則 (Routing Key、Binding) 將訊息分配到不同 Queue。
 - **Binding (綁定)**：定義 Exchange 與 Queue 的關係。
 - **Queue (佇列)**：儲存訊息，等待 Consumer 消費。
 - **Consumer (消費者)**：從 Queue 取出並處理訊息。
 
 ### 流程簡述
-1. Producer 發送訊息給 Exchange。
+1. Publisher 發送訊息給 Exchange。
 2. Exchange 根據 Binding 規則，分配到對應 Queue。
 3. Consumer 從 Queue 消費並處理訊息。
 
