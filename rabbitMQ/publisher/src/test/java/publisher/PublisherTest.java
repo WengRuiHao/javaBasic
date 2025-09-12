@@ -1,11 +1,12 @@
 package publisher;
 
+import com.javaBasic.PublisherApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = com.javaBasic.PublisherApplication.class)
+@SpringBootTest(classes = PublisherApplication.class)
 public class PublisherTest {
 
     @Autowired
@@ -13,9 +14,9 @@ public class PublisherTest {
 
     @Test
     void testSendMessage2Queue() {
-        System.out.println("123");
         String queueName = "hello.queue1";
-        String msg = "hello, amqp!";
+//        String msg = "hello, amqp!";
+        String msg = "你好, 接收者!";
         rabbitTemplate.convertAndSend(queueName, msg);
     }
 }

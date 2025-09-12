@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MQListener {
 
-    @RabbitListener(queues = "hello.queue2")
+    @RabbitListener(queues = "hello.queue1")
     public void listenSimpleQueue(String msg) {
         System.out.println("消費者抽到hello.queue1的消息: [" + msg + "] ");
     }
