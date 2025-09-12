@@ -10,8 +10,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>mq-demo</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>rabbitMQ</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>consumer</module>
+        <module>publisher</module>
+    </modules>
 
     <dependencies>
         <!-- Spring Boot Web -->
@@ -24,6 +28,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version> <!-- 可依照最新版本調整 -->
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 </project>

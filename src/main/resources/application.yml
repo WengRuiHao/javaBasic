@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: javaBasic
+
+server:
+  port: 8081
+
+thread:
+  pool:
+    core-size: 5
+    max-size: 10
+    queue-capacity: 100
+    keep-alive: 60
