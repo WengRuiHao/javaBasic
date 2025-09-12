@@ -18,4 +18,5 @@ spring:
 ### Spring AMQP如何收到消息
 - 1.引入spring-boot-start-amqp依賴
 - 2.RabbitMQ配置 服務端訊息
-- 3.利用 `@RabbitListener` 註解宣告要監聽的queue，監聽消息 
+- 3.利用 `@RabbitListener` 註解宣告要監聽的queue，監聽消息  
+ [範例](src/main/java/com/javaBasic/listeners/MQListener.java)

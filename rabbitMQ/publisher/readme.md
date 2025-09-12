@@ -18,4 +18,5 @@ spring:
 ### Spring AMQP如何發送消息
 - 1.引入spring-boot-start-amqp依賴
 - 2.RabbitMQ配置 服務端訊息
-- 3.利用 `RabbitTemplate` 發送消息 
+- 3.利用 `RabbitTemplate` 發送消息  
+ [範例](src/test/java/publisher/PublisherTest.java)
