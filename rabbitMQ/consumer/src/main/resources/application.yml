@@ -4,7 +4,7 @@ spring:
     port: 5672
     virtual-host: /
     username: ruihaoweng
-    password: seldom12336
+    password: ************
 logging:
   pattern:
     dateformat: MM:dd HH:mm:ss:SSS
