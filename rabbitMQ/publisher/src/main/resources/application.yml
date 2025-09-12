@@ -3,7 +3,7 @@ spring:
     host: localhost
     port: 5672
     username: ruihaoweng
-    password: seldom12336
+    password: ***********
     virtual-host: /
 logging:
   pattern:
