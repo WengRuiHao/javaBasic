@@ -78,8 +78,10 @@
 
 ## 六、訊息的可靠性
 - [***發送者重新連線***](publisher/src/main/resources/application.yml)
+
 ![重連機制](picture/RabbitMQ_1.png)
 - [***發送者確認***](publisher/src/main/resources/application.yml)
+
 ![重連機制](picture/RabbitMQ_2.png)
 ![重連機制](picture/RabbitMQ_3.png)
 ![重連機制](picture/RabbitMQ_4.png)
