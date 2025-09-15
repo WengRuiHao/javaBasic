@@ -1,14 +1,18 @@
 package publisher;
 
 import com.javaBasic.PublisherApplication;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
+@Slf4j
 @SpringBootTest(classes = PublisherApplication.class)
 public class PublisherTest {
 
@@ -61,5 +65,29 @@ public class PublisherTest {
         msg.put("name", "Jack");
         msg.put("age", 21);
         rabbitTemplate.convertAndSend("object.queue", msg);
+    }
+
+    @Test
+    void testConfirmCallback() throws InterruptedException {
+        // 1. 創建cd
+        CorrelationData cd = new CorrelationData(UUID.randomUUID().toString());
+        // 2. 添加 ConfirmCallback
+        cd.getFuture().thenAccept(confirm -> {
+            log.debug("收到 confirm callback 回執");
+            if(confirm.isAck()) {
+                // 消息發送成功
+                log.debug("消送發送成功，收到 ack");
+            } else {
+                log.error("消息發送失敗，收到 nack ，原因: {}",confirm.getReason());
+            }
+        }).exceptionally(ex -> {
+            log.error("消息回調失敗", ex);
+           return null;
+        });
+
+
+        rabbitTemplate.convertAndSend("ruihao.direct", "red", "hello", cd);
+
+        Thread.sleep(2000);
     }
 }

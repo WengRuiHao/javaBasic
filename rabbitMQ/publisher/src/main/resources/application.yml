@@ -5,6 +5,20 @@ spring:
     username: ruihaoweng
     password: ***********
     virtual-host: /
+    connection-timeout: 1s              # 設置MQ的連接超時時間
+    publisher-confirm-type: CORRELATED  # 開始 publisher confirm 機制，並設置 confirm 類型
+    publisher-returns: true             # 開啟 publisher return 機制
+    template:
+      retry:
+        enabled: true                   # 開啟超時 重連機制
+        multiplier: 1                   #失敗後下次的等待時長倍數
+        max-attempts: 3                 # 最大重式次數
+        initial-interval: 1000ms        # 失敗後的初始等待時間
 logging:
   pattern:
     dateformat: MM-dd HH:mm:ss:SSS
+  level:
+    publisher: debug
+  file:
+    name: ../common/log/app.log
+

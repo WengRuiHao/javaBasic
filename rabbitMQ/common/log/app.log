@@ -1,0 +1,9 @@
+09-15 15:07:16:824  INFO 21244 --- [main] publisher.PublisherTest                  : Starting PublisherTest using Java 17.0.1 with PID 21244 (started by RuiHaoWeng in C:\WRH\javaBasic\rabbitMQ\publisher)
+09-15 15:07:16:826 DEBUG 21244 --- [main] publisher.PublisherTest                  : Running with Spring Boot v3.5.4, Spring v6.2.9
+09-15 15:07:16:827  INFO 21244 --- [main] publisher.PublisherTest                  : No active profile set, falling back to 1 default profile: "default"
+09-15 15:07:17:680  WARN 21244 --- [main] o.s.r.backoff.ExponentialBackOffPolicy   : Multiplier must be > 1.0 for effective exponential backoff, but was 1.0
+09-15 15:07:18:086  INFO 21244 --- [main] publisher.PublisherTest                  : Started PublisherTest in 1.593 seconds (process running for 2.445)
+09-15 15:07:18:886  INFO 21244 --- [main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
+09-15 15:07:18:955  INFO 21244 --- [main] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#59939293:0/SimpleConnection@14590fe2 [delegate=amqp://ruihaoweng@127.0.0.1:5672/, localPort=61997]
+09-15 15:07:18:989 DEBUG 21244 --- [AMQP Connection 127.0.0.1:5672] publisher.PublisherTest                  : 收到 confirm callback 回執
+09-15 15:07:18:990 DEBUG 21244 --- [AMQP Connection 127.0.0.1:5672] publisher.PublisherTest                  : 消送發送成功，收到 ack
