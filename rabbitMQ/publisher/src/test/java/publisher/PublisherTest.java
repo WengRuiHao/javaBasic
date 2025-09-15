@@ -21,6 +21,7 @@ public class PublisherTest {
 //        String msg = "hello, amqp!";
         String msg = "你好, 接收者!";
         rabbitTemplate.convertAndSend(queueName, msg);
+        System.out.println("msg = " + msg);
     }
 
     @Test

@@ -21,7 +21,7 @@
 
 ## 二、異步調用 (Asynchronous Call)
 
-![異步調用概念圖](異步調用.png)
+![異步調用概念圖](picture/異步調用.png)
 
 ### 特點
 - 基於**消息通知**的方式，發送請求後不必等待結果。
@@ -45,7 +45,7 @@
 
 ## 三、RabbitMQ 的重要名詞與概念
 
-![RabbitMQ 架構示意圖](RabbitMQ.png)
+![RabbitMQ 架構示意圖](picture/RabbitMQ.png)
 
 ### 名詞解釋
 - **Publisher (生產者)**：產生訊息並發送到 Exchange。
@@ -62,10 +62,10 @@
 ---
 
 ## 四、RabbitMQ exchange 類型
-![交換機](exchange.png)
+![交換機](picture/exchange.png)
 
 ***比較特別的Topic***
-![Topic](topic.png)
+![Topic](picture/topic.png)
 
 ---
 
@@ -73,3 +73,11 @@
 
 - **同步調用**：下單即時確認、登入驗證、即時查詢。
 - **異步調用**：寄送通知郵件、記錄日誌、批量數據分析。
+
+---
+
+## 六、訊息的可靠性
+- ***發送者重新連線***
+![重連機制](picture/RabbitMQ_1.png)
+- ***發送者確認***
+![重連機制](picture/RabbitMQ_2.png)
