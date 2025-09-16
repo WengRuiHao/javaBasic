@@ -97,7 +97,8 @@
 
 ***以上手段都會增加系統的負擔和資源消耗，因此大部分都不會去開啟confirm機制，除非對消息的可靠性有比較高的要求***
 ### RabbitMQ如何保證MQ消息的可靠性
-- 1.先通過配置可以讓交換機、對列、和發送的消息都持久畫。這樣對列中的消息會持久畫到磁盤，**RabbitMQ**重啟消息依然存在
+- 1.先通過配置可以讓交換機、對列、和發送的消息都持久畫。這樣對列中的消息會持久化到磁盤，**RabbitMQ**重啟消息依然存在
 - 2.RabbitMQ 在3.6版本引入 **LazyQueue**，並且在3.12版本後會稱為對列的默認模式。**LazyQueue** 會將所有消息都持久化
-- 3.開啟持久化合生產者確認時，**RabbitMQ** 只有在消息持久化完成後才會給生產者返回ACK回執
+- 3.開啟持久化和生產者確認時，**RabbitMQ** 只有在消息持久化完成後才會給生產者返回ACK回執  
+**[範例 : 看 listenDirectQueue1 方法](consumer/src/main/java/com/javaBasic/listeners/MQListener.java)**
 ### RabbitMQ如何保證消費者的可靠性

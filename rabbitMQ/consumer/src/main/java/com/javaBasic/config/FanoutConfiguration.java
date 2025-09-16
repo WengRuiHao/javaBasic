@@ -4,6 +4,10 @@ import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * RabbitMQ 配置 : exchange(交換機) Queue(拧列) rountingKey(拧列鑰匙) binding(交換機跟拧列的綁定)
+ * 有更簡單的寫法: 註解的寫法 請看 MQListener.java 的 listenDirectQueue1 方法
+ */
 //@Configuration
 public class FanoutConfiguration {
 

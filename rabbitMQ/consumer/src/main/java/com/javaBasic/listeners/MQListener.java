@@ -39,9 +39,9 @@ public class MQListener {
     }
 
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(name = "direct.queue1", durable = "true"),
-            exchange = @Exchange(name = "ruihao.direct", type = ExchangeTypes.DIRECT, arguments = @Argument(name = "x-queue-mode", value = "lazy")),
-            key = {"red", "blue"}
+            value = @Queue(name = "direct.queue1", durable = "true", arguments = @Argument(name = "x-queue-mode", value = "lazy")),
+            exchange = @Exchange(name = "ruihao.direct", type = ExchangeTypes.DIRECT),
+            key = {"red", "blue"} // routingKey
     ))
     public void listenDirectQueue1(String msg) throws InterruptedException {
         System.out.println("消費者1 收到 direct.queue1 的消息: [" + msg + "] ");
@@ -50,7 +50,7 @@ public class MQListener {
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(name = "direct.queue2", durable = "true", arguments = @Argument(name = "x-queue-mode", value = "lazy")),
             exchange = @Exchange(name = "ruihao.direct", type = ExchangeTypes.DIRECT),
-            key = {"red", "yellow"}
+            key = {"red", "yellow"} // routingKey
     ))
     public void listenDirectQueue2(String msg) throws InterruptedException {
         System.out.println("消費者2 收到 direct.queue2 的消息: [" + msg + "] ");

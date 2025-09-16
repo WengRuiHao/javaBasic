@@ -3,11 +3,15 @@ package publisher;
 import com.javaBasic.PublisherApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageBuilder;
+import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -30,7 +34,7 @@ public class PublisherTest {
 
     @Test
     void testWorkQueue() throws InterruptedException {
-            String queueName = "work.queue";
+        String queueName = "work.queue";
         for (int i = 1; i <= 50; i++) {
             String msg = "hello, worker, message_" + i;
             rabbitTemplate.convertAndSend(queueName, msg);
@@ -74,20 +78,29 @@ public class PublisherTest {
         // 2. 添加 ConfirmCallback
         cd.getFuture().thenAccept(confirm -> {
             log.debug("收到 confirm callback 回執");
-            if(confirm.isAck()) {
+            if (confirm.isAck()) {
                 // 消息發送成功
                 log.debug("消送發送成功，收到 ack");
             } else {
-                log.error("消息發送失敗，收到 nack ，原因: {}",confirm.getReason());
+                log.error("消息發送失敗，收到 nack ，原因: {}", confirm.getReason());
             }
         }).exceptionally(ex -> {
             log.error("消息回調失敗", ex);
-           return null;
+            return null;
         });
 
 
-        rabbitTemplate.convertAndSend("ruihao.direct", "red", "hello", cd);
+        rabbitTemplate.convertAndSend("ruihao.direct", "red123", "hello", cd);
 
         Thread.sleep(2000);
+    }
+
+    @Test
+    void testPageOut() {
+        Message message =  MessageBuilder.withBody("hello".getBytes(StandardCharsets.UTF_8))
+                .setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT).build();
+        for (int i = 1; i < 1000000; i++) {
+            rabbitTemplate.convertAndSend("lazy.queue", message);
+        }
     }
 }
