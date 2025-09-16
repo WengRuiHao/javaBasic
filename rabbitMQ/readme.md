@@ -76,7 +76,7 @@
 
 ---
 
-## 六、訊息的可靠性
+## 六、生產者的可靠性
 - [***發送者重新連線***](publisher/src/main/resources/application.yml)
 
 ![重連機制](picture/RabbitMQ_1.png)
@@ -85,6 +85,16 @@
 ![重連機制](picture/RabbitMQ_2.png)
 ![重連機制](picture/RabbitMQ_3.png)
 ![重連機制](picture/RabbitMQ_4.png)
+
+---
+
+## 七、消費者的可靠性
+- [***消費者確認機制***](consumer/src/main/resources/application.yml) 
+
+![消費者機制](picture/RabbitMQ_5.png)
+- [***消費者確認機制***](consumer/src/main/resources/application.yml)  
+
+![消費者機制](picture/RabbitMQ_6.png)
 
 ---
 
@@ -102,3 +112,4 @@
 - 3.開啟持久化和生產者確認時，**RabbitMQ** 只有在消息持久化完成後才會給生產者返回ACK回執  
 **[範例 : 看 listenDirectQueue1 方法](consumer/src/main/java/com/javaBasic/listeners/MQListener.java)**
 ### RabbitMQ如何保證消費者的可靠性
+
