@@ -86,15 +86,18 @@
 ![重連機制](picture/RabbitMQ_3.png)
 ![重連機制](picture/RabbitMQ_4.png)
 
+### ***流程圖***
+![流程圖](picture/RabbitMQ_8.png)
 ---
 
 ## 七、消費者的可靠性
 - [***消費者確認機制***](consumer/src/main/resources/application.yml) 
 
-![消費者機制](picture/RabbitMQ_5.png)
-- [***消費者確認機制***](consumer/src/main/resources/application.yml)  
+![失敗重試機制](picture/RabbitMQ_5.png)
+- [***失敗重試機制***](consumer/src/main/resources/application.yml)  
 
 ![消費者機制](picture/RabbitMQ_6.png)
+![消費者機制](picture/RabbitMQ_7.png)
 
 ---
 
