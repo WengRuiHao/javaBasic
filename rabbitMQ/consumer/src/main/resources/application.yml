@@ -8,13 +8,13 @@ spring:
     listener:
       simple:
         prefetch: 1                 # 每次只能得到一個消息，處理完成才能取得下一個消息
-        acknowledge-mode: AUTO      # none:關閉ack, manual:手動ack, auto:自動ack
+        acknowledge-mode: AUTO      # 消息消費者確認機制 : none:關閉ack, manual:手動ack, auto:自動ack
         retry:
           enabled: true             # 開啟消費者失敗重連機制
-          initial-interval: 1000ms  # 初始的失敗等待時常為1秒
-          multiplier: 1             #下次失敗的等待時長倍數
-          max-attempts: 3           # 最大重式次數
-          stateless: true           # true無狀態; false有狀態。如果業務中包含事務,這裡改為 false
+#          initial-interval: 1000ms  # 初始的失敗等待時常為1秒
+#          multiplier: 1             #下次失敗的等待時長倍數
+#          max-attempts: 3           # 最大重式次數
+#          stateless: true           # true無狀態; false有狀態。如果業務中包含事務,這裡改為 false
 logging:
   pattern:
     dateformat: MM:dd HH:mm:ss:SSS
