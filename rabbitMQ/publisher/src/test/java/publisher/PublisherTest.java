@@ -3,9 +3,11 @@ package publisher;
 import com.javaBasic.PublisherApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageDeliveryMode;
+import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class PublisherTest {
 //        String msg = "hello, amqp!";
         String msg = "你好, 接收者!";
         rabbitTemplate.convertAndSend(queueName, msg);
-        System.out.println("msg = " + msg);
+        log.info("msg = " + msg);
     }
 
     @Test
@@ -97,10 +99,22 @@ public class PublisherTest {
 
     @Test
     void testPageOut() {
-        Message message =  MessageBuilder.withBody("hello".getBytes(StandardCharsets.UTF_8))
+        Message message = MessageBuilder.withBody("hello".getBytes(StandardCharsets.UTF_8))
                 .setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT).build();
         for (int i = 1; i < 1000000; i++) {
             rabbitTemplate.convertAndSend("lazy.queue", message);
         }
+    }
+
+    @Test
+    void testSendTTLMessage() {
+        rabbitTemplate.convertAndSend("simple.direct", "hi", "hello", new MessagePostProcessor() {
+            @Override
+            public Message postProcessMessage(Message message) throws AmqpException {
+                message.getMessageProperties().setExpiration("1000");
+                return message;
+            }
+        });
+        log.info("消息發送成功");
     }
 }

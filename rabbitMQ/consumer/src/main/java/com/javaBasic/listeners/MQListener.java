@@ -2,9 +2,11 @@ package com.javaBasic.listeners;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Slf4j
@@ -13,7 +15,13 @@ public class MQListener {
 
     @RabbitListener(queues = "hello.queue1")
     public void listenSimpleQueue(String msg) {
+        /**
+         * 在使用類型 Message 在測試用
+         */
+//        System.out.println("消費者 收到 hello.queue1 的消息id: [" + msg.getMessageProperties().getMessageId() + "] ");
+//        System.out.println("消費者 收到 hello.queue1 的消息: [" + new String(msg.getBody(), StandardCharsets.UTF_8) + "] ");
         System.out.println("消費者 收到 hello.queue1 的消息: [" + msg + "] ");
+//        throw new RuntimeException("故意的");
     }
 
     @RabbitListener(queues = "work.queue")
@@ -69,5 +77,15 @@ public class MQListener {
     @RabbitListener(queues = "lazy.queue")
     public void listenObject(Map<String, Object> msg) throws InterruptedException {
         System.out.println("消費者 收到 object.queue 的消息: [" + msg + "] ");
+    }
+
+//    @RabbitListener(queues = "simple.queue")
+    public void listenSimpleQueue(Map<String, Object> msg) throws InterruptedException {
+        log.info("消費者 收到 object.queue 的消息: [" + msg + "] ");
+    }
+
+    @RabbitListener(queues = "dlx.queue")
+    public void listenDlxQueue(String msg) throws InterruptedException {
+        log.info("消費者 收到 dlx.queue 的消息: [" + msg + "] ");
     }
 }

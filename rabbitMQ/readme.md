@@ -107,14 +107,29 @@
 ---
 
 ## 八、消費者的可靠性
-- [***消費者確認機制***](consumer/src/main/resources/application.yml) 
+### 消費者確認機制
 
 ![失敗重試機制](picture/RabbitMQ_5.png)
-- [***失敗重試機制***](consumer/src/main/resources/application.yml)  
+### 失敗重試機制 
 
 ![消費者機制](picture/RabbitMQ_6.png)
 ![消費者機制](picture/RabbitMQ_7.png)
 ![消費者機制](picture/RabbitMQ_9.png)
+### 業務冪等性
+ 
+![業務冪等性](picture/RabbitMQ_15.png)
+![業務冪等性](picture/RabbitMQ_16.png)
+![業務冪等性](picture/RabbitMQ_17.png)
+
+---
+
+## 九、延遲消息
+
+![延遲消息](picture/Delay_Message.png)
+### 死信交換機
+![延遲消息](picture/Delay_Message_1.png)
+### 延遲消息插件
+### 取消超時訂單
 
 ---
 
@@ -135,4 +150,11 @@
 - 1.開啟消費者確認機制為 auto,由 spring 確認消息處理成功後返回 ack,異常時返回 nack
 - 2.開啟消費者失敗重試機制,並設置 MessageRecover,多次重試後將消息轉發到異常交換機,由人工處理  
   **[消費者 確認機制 跟 失敗重試機制 的配置設定](consumer/src/main/resources/application.yml)**
+### 如何保證支付服務和交易服務之間的訂單狀態一致性?
+- 1.支付服務會正在用戶支付成功以後利用MQ消息通知交易服務，完成**訂單狀態**同步
+- 2.為了保證MQ消息的可靠性，我採用了生產者確認機制、消費者確認機制、消費者失敗重試等方式，確保消息發送和處理的可靠性。
+同時也開啟MQ的持久化，避免因服務當機導致消息丟失。
+- 3.我還在交易服務更新**訂單狀態**時做業務冪等判斷，避免因消息重複消費導致**訂單狀態**異常。
+### 如果交易服務消息處理失敗，有沒有甚麼方法?
+可以在交易服務設置定時任務，定期查詢訂單支付狀態。這樣即便MQ通知失敗，還可以利用定時任務作為方法，確保**訂單支付狀態**的最終一致性
 
