@@ -130,7 +130,7 @@
 - 1.先通過配置可以讓交換機、對列、和發送的消息都持久化。這樣對列中的消息會持久化到磁盤，**RabbitMQ**重啟消息依然存在
 - 2.RabbitMQ 在3.6版本引入 **LazyQueue**，並且在3.12版本後會稱為對列的默認模式。**LazyQueue** 會將所有消息都持久化
 - 3.開啟持久化和生產者確認時，**RabbitMQ** 只有在消息持久化完成後才會給生產者返回ACK回執  
-**[範例 : 看 listenDirectQueue1 方法](consumer/src/main/java/com/javaBasic/listeners/MQListener.java)**
+  **[範例 : 看 listenDirectQueue1 方法](consumer/src/main/java/com/javaBasic/listeners/MQListener.java)**
 ### 消費者如何保證消息一定會消費
 - 1.開啟消費者確認機制為 auto,由 spring 確認消息處理成功後返回 ack,異常時返回 nack
 - 2.開啟消費者失敗重試機制,並設置 MessageRecover,多次重試後將消息轉發到異常交換機,由人工處理  
