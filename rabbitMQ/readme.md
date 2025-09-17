@@ -88,9 +88,25 @@
 
 ### ***流程圖***
 ![流程圖](picture/RabbitMQ_8.png)
+
 ---
 
-## 七、消費者的可靠性
+## 七、MQ的可靠性
+![MQ的可靠性](picture/RabbitMQ_10.png)
+
+### MQ可靠性的兩種方式:
+- **1.資料持久化**
+
+![MQ的可靠性](picture/RabbitMQ_11.png)
+- **2.LazyQueue**
+
+![MQ的可靠性](picture/RabbitMQ_12.png)
+![MQ的可靠性](picture/RabbitMQ_13.png)
+![MQ的可靠性](picture/RabbitMQ_14.png)
+
+---
+
+## 八、消費者的可靠性
 - [***消費者確認機制***](consumer/src/main/resources/application.yml) 
 
 ![失敗重試機制](picture/RabbitMQ_5.png)
@@ -98,6 +114,7 @@
 
 ![消費者機制](picture/RabbitMQ_6.png)
 ![消費者機制](picture/RabbitMQ_7.png)
+![消費者機制](picture/RabbitMQ_9.png)
 
 ---
 
@@ -110,9 +127,12 @@
 
 ***以上手段都會增加系統的負擔和資源消耗，因此大部分都不會去開啟confirm機制，除非對消息的可靠性有比較高的要求***
 ### RabbitMQ如何保證MQ消息的可靠性
-- 1.先通過配置可以讓交換機、對列、和發送的消息都持久畫。這樣對列中的消息會持久化到磁盤，**RabbitMQ**重啟消息依然存在
+- 1.先通過配置可以讓交換機、對列、和發送的消息都持久化。這樣對列中的消息會持久化到磁盤，**RabbitMQ**重啟消息依然存在
 - 2.RabbitMQ 在3.6版本引入 **LazyQueue**，並且在3.12版本後會稱為對列的默認模式。**LazyQueue** 會將所有消息都持久化
 - 3.開啟持久化和生產者確認時，**RabbitMQ** 只有在消息持久化完成後才會給生產者返回ACK回執  
 **[範例 : 看 listenDirectQueue1 方法](consumer/src/main/java/com/javaBasic/listeners/MQListener.java)**
-### RabbitMQ如何保證消費者的可靠性
+### 消費者如何保證消息一定會消費
+- 1.開啟消費者確認機制為 auto,由 spring 確認消息處理成功後返回 ack,異常時返回 nack
+- 2.開啟消費者失敗重試機制,並設置 MessageRecover,多次重試後將消息轉發到異常交換機,由人工處理  
+  **[消費者 確認機制 跟 失敗重試機制 的配置設定](consumer/src/main/resources/application.yml)**
 
