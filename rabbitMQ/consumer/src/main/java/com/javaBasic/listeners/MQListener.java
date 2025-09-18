@@ -79,7 +79,7 @@ public class MQListener {
         System.out.println("消費者 收到 object.queue 的消息: [" + msg + "] ");
     }
 
-//    @RabbitListener(queues = "simple.queue")
+    //    @RabbitListener(queues = "simple.queue")
     public void listenSimpleQueue(Map<String, Object> msg) throws InterruptedException {
         log.info("消費者 收到 object.queue 的消息: [" + msg + "] ");
     }
@@ -87,5 +87,14 @@ public class MQListener {
     @RabbitListener(queues = "dlx.queue")
     public void listenDlxQueue(String msg) throws InterruptedException {
         log.info("消費者 收到 dlx.queue 的消息: [" + msg + "] ");
+    }
+
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(value = "delay.queue", durable = "true"),
+            exchange = @Exchange(value = "delay.direct", delayed = "true"),
+            key = "hi"
+    ))
+    public void listenDelayedQueue(String msg) {
+        log.info("接收到 delay.queue 的消息: {}", msg);
     }
 }

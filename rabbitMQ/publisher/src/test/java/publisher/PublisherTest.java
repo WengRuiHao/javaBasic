@@ -117,4 +117,15 @@ public class PublisherTest {
         });
         log.info("消息發送成功");
     }
+
+    @Test
+    void testDelayMessage() {
+        rabbitTemplate.convertAndSend("delay.direct","hi","hello", new MessagePostProcessor() {
+            @Override
+            public Message postProcessMessage(Message message) throws AmqpException {
+                message.getMessageProperties().setDelayLong(10000L);
+                return message;
+            }
+        });
+    }
 }

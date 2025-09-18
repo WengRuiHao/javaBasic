@@ -129,7 +129,44 @@
 ### 死信交換機
 ![延遲消息](picture/Delay_Message_1.png)
 ### 延遲消息插件
+![延遲消息](picture/Delay_Message_3.png)
+![延遲消息](picture/Delay_Message_4.png)
+![延遲消息](picture/Delay_Message_5.png)
+可以先在**docker mq容器**裡面下指令看有哪些插件
+```/opt/rabbitmq/sbin/rabbitmq-plugins list```
+![延遲消息](picture/Delay_Message_2.png)
+先到[**RabbitMQ官方**](https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases) 下載對應的版本  
+再到命令提示字元下指令```cp "rabbitmq_delayed_message_exchange的位置" mq:/opt/rabbitmq/plugins/```把插件放入到容器裡面
+在下指令```docker exec -it mq rabbitmq-plugins enable rabbitmq_delayed_message_exchange``` 這樣就能成功把插件載入到RabbitMQ  
+下面是成功後的訊息
+```
+C:\Users\RuiHaoWeng>docker cp "rabbitmq_delayed_message_exchange的位置" mq:/opt/rabbitmq/plugins/
+Successfully copied 44kB to mq:/opt/rabbitmq/plugins/
+C:\Users\RuiHaoWeng>docker exec -it mq rabbitmq-plugins enable rabbitmq_delayed_message_exchange
+Enabling plugins on node rabbit@7b4aac2c2c7f:
+rabbitmq_delayed_message_exchange
+Problem reading some plugins: [{"/opt/rabbitmq/plugins/rabbitmq_delayed_message_exchange-4.0.2.ez",
+                                duplicate_plugin}]
+Problem reading some plugins: [{"/opt/rabbitmq/plugins/rabbitmq_delayed_message_exchange-4.0.2.ez",
+                                duplicate_plugin}]
+Problem reading some plugins: [{"/opt/rabbitmq/plugins/rabbitmq_delayed_message_exchange-4.0.2.ez",
+                                duplicate_plugin}]
+The following plugins have been configured:
+  rabbitmq_delayed_message_exchange
+  rabbitmq_management
+  rabbitmq_management_agent
+  rabbitmq_prometheus
+  rabbitmq_web_dispatch
+Applying plugin configuration to rabbit@7b4aac2c2c7f...
+The following plugins have been enabled:
+  rabbitmq_delayed_message_exchange
+
+started 1 plugins.
+```
 ### 取消超時訂單
+***可以把30分鐘切割成很幾份，降低RabbitMQ的壓力***
+![延遲消息](picture/Delay_Message_6.png)
+![延遲消息](picture/Delay_Message_7.png)
 
 ---
 
