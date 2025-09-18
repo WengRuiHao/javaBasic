@@ -17,7 +17,6 @@
 
     <modules>
         <module>rabbitMQ</module>
-        <module>rabbitMQ/common</module>
     </modules>
 
     <url/>

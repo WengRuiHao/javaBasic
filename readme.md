@@ -21,8 +21,23 @@
   - Future + CompletionService 處理批量任務
   - Atomic 類 (無鎖計數器)
   - 併發集合
-### 4. RabbitMQ 應用
+### 4. Rabbit MQ 應用
 ![MessageQueue比較圖](rabbitMQ/picture/MessageQueue.png)
 - [系統調用方式與消息中介概念整理](rabbitMQ)
   - 同步調用 (Synchronous Call) 和 異步調用 (Asynchronous Call)
   - RabbitMQ 的重要名詞與概念
+### 5. Redis
+- **認識 NoSQL**
+
+![NoSQL](Redis/picture/NoSQL.png)
+- **安裝 Redis**
+  - 先確認一下系統包管理工具 apt 是正常的```sudo apt update```
+  - 安裝Redis的指令```sudo apt install redis-server -y```
+  - 希望 Redis 在開機時自動啟動，可以使用以下命令‵```sudo systemctl enable redis-server```
+
+***測試安裝是否成功，是不是可以連接的上Redis***
+![Redis](Redis/picture/Redis_1.png)
+
+- **[認識 Redis](Redis)**
+
+![Redis](Redis/picture/Redis.png)
