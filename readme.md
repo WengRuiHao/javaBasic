@@ -37,6 +37,17 @@
 
 ***測試安裝是否成功，是不是可以連接的上Redis***
 ![Redis](Redis/picture/Redis_1.png)
+***如果要讓 Redis 以後台啟動，就要修改 Redis 配置文件(redis.conf)***  
+先備份 **redis.conf** 文件，以防改錯配置還可以用備份文件去修改。 (linux 快速搜尋檔案:```which 檔案名```)
+![Redis](Redis/picture/Redis_2.png)
+**輸入:```i``` 保存:```:w``` 退出:```:q!``` 搜尋關鍵字:```/關鍵字```**
+![Redis](Redis/picture/Redis_3.png)
+***LINUX 小知識***  
+ps 用來顯示目前系統中的進程（process）。  
+-e：列出系統上所有的進程。  
+-f：以完整格式（full-format）顯示，包括 UID、PID、父進程 ID (PPID)、啟動時間、終端、CPU 時間、啟動命令等。
+![Redis](Redis/picture/Redis_4.png)
+
 
 - **[認識 Redis](Redis)**
 
