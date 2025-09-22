@@ -51,6 +51,18 @@
 
 ---
 
+### Set 類型
+![Redis Set 類型](picture/Set.png)
+![Redis Set 類型](picture/Set_1.png)
+
+---
+
+### SortedSet 類型
+![Redis SortedSet 類型](picture/SortedSet.png)
+![Redis SortedSet 類型](picture/SortedSet_1.png)
+
+---
+
 ### Key 層級格式
 ![Redis Key 層級格式](picture/Key.png)
 ![Redis Key 層級格式](picture/Key_1.png)
