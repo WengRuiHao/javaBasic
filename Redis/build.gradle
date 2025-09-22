@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.2.5'   // Spring Boot 插件 (版本可依需要調整)
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com.javaBasic'
@@ -10,8 +12,19 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter' // Spring Boot Starter (最基本的 Web 啟動器)
+    implementation 'redis.clients:jedis:6.1.0' // Redis client (Jedis)
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // 測試
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
