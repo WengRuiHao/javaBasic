@@ -13,7 +13,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter' // Spring Boot Starter (最基本的 Web 啟動器)
-    implementation 'redis.clients:jedis:6.1.0' // Redis client (Jedis)
+    implementation 'redis.clients:jedis:6.1.0'     // Redis client (Jedis)
+    compileOnly 'io.lettuce:lettuce-core:6.7.1.RELEASE' // Redis client (lettuce)
 
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.30'
