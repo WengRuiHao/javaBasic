@@ -16,9 +16,9 @@ public class JedisTest {
     void setUp() {
         // 1.建立連接
 //        jedis = new Jedis("localhost", 6379);
-        jedis = JedisConnectionFactory.getJedis();
         // 2. 設置密碼
-        jedis.auth("123321");
+//        jedis.auth("123321");
+        jedis = JedisConnectionFactory.getJedis();
         // 3. 選擇庫
         jedis.select(0);
     }
