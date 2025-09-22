@@ -1,6 +1,7 @@
 package com.ruihao.test;
 
 
+import com.ruihao.jedis.util.JedisConnectionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,9 +15,10 @@ public class JedisTest {
     @BeforeEach
     void setUp() {
         // 1.建立連接
-        jedis = new Jedis("localhost", 6379);
+//        jedis = new Jedis("localhost", 6379);
+        jedis = JedisConnectionFactory.getJedis();
         // 2. 設置密碼
-        jedis.auth("********");
+        jedis.auth("123321");
         // 3. 選擇庫
         jedis.select(0);
     }
