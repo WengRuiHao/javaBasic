@@ -12,9 +12,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter' // Spring Boot Starter (最基本的 Web 啟動器)
-    implementation 'redis.clients:jedis:6.1.0'     // Redis client (Jedis)
-    compileOnly 'io.lettuce:lettuce-core:6.7.1.RELEASE' // Redis client (lettuce)
+    implementation 'org.springframework.boot:spring-boot-starter'               // Spring Boot Starter (最基本的 Web 啟動器)
+    implementation 'redis.clients:jedis:6.1.0'                                  // Redis client (Jedis)
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'    // Spring Data Redis
+    implementation 'org.apache.commons:commons-pool2'                           // commons-pool2 連線池
 
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.30'
@@ -26,6 +27,8 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations'
 }
 
 test {

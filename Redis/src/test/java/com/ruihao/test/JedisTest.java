@@ -1,14 +1,20 @@
 package com.ruihao.test;
 
 
-import com.ruihao.jedis.util.JedisConnectionFactory;
+import com.ruihao.RedisApplication;
+import com.ruihao.pojo.User;
+import com.ruihao.util.JedisConnectionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import redis.clients.jedis.Jedis;
 
 import java.util.Map;
 
+@SpringBootTest
 public class JedisTest {
     private Jedis jedis;
 
@@ -45,7 +51,7 @@ public class JedisTest {
 
     @AfterEach
     void tearDown() {
-        if(jedis != null) {
+        if (jedis != null) {
             jedis.close();
         }
     }
