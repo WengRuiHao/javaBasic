@@ -15,6 +15,7 @@
 - 3.先操作資料庫還是先操作緩存?  
   先刪除緩存，在操作資料庫(多執行緒併行，容易發生緩存資料庫不一致性。不適用)  
   先操作資料庫，在刪除緩存(多執行緒併行，發生緩存資料庫不一致性機率比較小)
+## [示範如何使用  緩存穿透/緩存擊穿](../../../hm-dianping/src/main/java/com/hmdp/service/impl/ShopServiceImpl.java)
 ![RedisAdvanced_2.png](../../picture/RedisAdvanced_2.png)
 
 ![RedisAdvanced_3.png](../../picture/RedisAdvanced_3.png)
