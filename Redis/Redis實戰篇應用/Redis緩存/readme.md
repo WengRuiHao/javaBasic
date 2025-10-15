@@ -23,3 +23,18 @@
 
 ## Redis 緩存穿透
 ![RedisAdvanced_4.png](../../picture/RedisAdvanced_4.png)
+![RedisAdvanced_10.png](../../picture/RedisAdvanced_10.png)
+
+---
+
+## Redis 緩存雪崩
+![RedisAdvanced_5.png](../../picture/RedisAdvanced_5.png)
+
+---
+
+## Redis 緩存擊穿
+![RedisAdvanced_6.png](../../picture/RedisAdvanced_6.png)
+![RedisAdvanced_7.png](../../picture/RedisAdvanced_7.png)
+![RedisAdvanced_8.png](../../picture/RedisAdvanced_8.png)
+![RedisAdvanced_9.png](../../picture/RedisAdvanced_9.png)
+![RedisAdvanced_11.png](../../picture/RedisAdvanced_11.png)
