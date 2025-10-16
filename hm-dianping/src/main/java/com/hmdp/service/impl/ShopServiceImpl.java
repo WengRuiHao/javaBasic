@@ -9,7 +9,9 @@ import com.hmdp.entity.Shop;
 import com.hmdp.mapper.ShopMapper;
 import com.hmdp.service.IShopService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hmdp.utils.CacheClient;
 import com.hmdp.utils.RedisData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,27 +39,51 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    private CacheClient cacheClient;
+
     @Override
     public Result queryById(Long id) {
+        // 1. 先查詢快取（帶邏輯過期）
         // 緩存穿透
 //        Shop shop = queryWithPassThrough(id);
+        Shop shop = cacheClient.queryWithPassThrough(CACHE_SHOP_KEY, id, Shop.class, this::getById, CACHE_SHOP_TTL, TimeUnit.MINUTES);
 
         // 互斥鎖解決緩存擊穿
 //        Shop shop = queryWithMutex(id);
 
+        // 2. 如果快取沒命中（Redis 沒資料），則退回穿透查詢策略
         // 邏輯過期解決緩存擊穿
-        Shop shop = queryWithLogicalExpire(id);
-
+//        Shop shop = queryWithLogicalExpire(id);
         if (shop == null) {
-            return Result.ok("店鋪不存在");
+            shop = cacheClient.queryWithLogicalExpire(CACHE_SHOP_KEY, id, Shop.class, this::getById, CACHE_SHOP_TTL, TimeUnit.SECONDS);
         }
-        // 7. 返回
+
+        // 3. 返回錯誤結果
+        if (shop == null) {
+            return Result.fail("店鋪不存在");
+        }
+        // 4. 返回
         return Result.ok(shop);
     }
 
-    private static final ExecutorService CACHE_REBUILD_EXECUTOR = Executors.newFixedThreadPool(10);
+    @Override
+    @Transactional
+    public Result update(Shop shop) {
+        Long id = shop.getId();
+        if (id == null) {
+            return Result.fail("店鋪id不能為空");
+        }
+        // 1. 更新資料庫
+        updateById(shop);
+        // 2. 刪除緩存
+        stringRedisTemplate.delete(CACHE_SHOP_KEY + id);
+        return Result.ok();
+    }
 
-    public Shop queryWithLogicalExpire(Long id) {
+//    private static final ExecutorService CACHE_REBUILD_EXECUTOR = Executors.newFixedThreadPool(10);
+
+    /*public Shop queryWithLogicalExpire(Long id) {
         String key = CACHE_SHOP_KEY + id;
         // 1. 從 Redis 查詢商鋪緩存
         String shopJson = stringRedisTemplate.opsForValue().get(key);
@@ -97,9 +123,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         }
         // 6.4 返回過期的商鋪信息
         return shop;
-    }
+    }*/
 
-    public Shop queryWithMutex(Long id) {
+    /*public Shop queryWithMutex(Long id) {
         String key = CACHE_SHOP_KEY + id;
         // 1. 從 Redis 查詢商鋪緩存
         String shopJson = stringRedisTemplate.opsForValue().get(key);
@@ -142,9 +168,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         }
         // 8. 返回
         return shop;
-    }
+    }*/
 
-    public Shop queryWithPassThrough(Long id) {
+   /* public Shop queryWithPassThrough(Long id) {
         String key = CACHE_SHOP_KEY + id;
         // 1. 從 Redis 查詢商鋪緩存
         String shopJson = stringRedisTemplate.opsForValue().get(key);
@@ -169,9 +195,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(shop), CACHE_SHOP_TTL, TimeUnit.MINUTES);
         // 7. 返回
         return shop;
-    }
+    }*/
 
-    private boolean tryLock(String key) {
+    /*private boolean tryLock(String key) {
         Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(key, "1", 10, TimeUnit.SECONDS);
         return BooleanUtil.isTrue(flag);
     }
@@ -189,19 +215,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         redisData.setExpireTime(LocalDateTime.now().plusSeconds(expireSeconds));
         // 3. 寫入 Redis
         stringRedisTemplate.opsForValue().set(CACHE_SHOP_KEY + id, JSONUtil.toJsonStr(redisData));
-    }
+    }*/
 
-    @Override
-    @Transactional
-    public Result update(Shop shop) {
-        Long id = shop.getId();
-        if (id == null) {
-            return Result.fail("店鋪id不能為空");
-        }
-        // 1. 更新資料庫
-        updateById(shop);
-        // 2. 刪除緩存
-        stringRedisTemplate.delete(CACHE_SHOP_KEY + id);
-        return Result.ok();
-    }
+
 }
