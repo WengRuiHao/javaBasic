@@ -8,7 +8,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class RedisIdWorker {
+public class RedisIsIdWorker {
 
     /**
      * 開始時間戳
@@ -20,7 +20,7 @@ public class RedisIdWorker {
     private static final int COUNT_BITS = 32;
     private StringRedisTemplate stringRedisTemplate;
 
-    public RedisIdWorker(StringRedisTemplate stringRedisTemplate) {
+    public RedisIsIdWorker(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 

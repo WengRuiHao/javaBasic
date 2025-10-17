@@ -3,7 +3,7 @@ package com.hmdp;
 import com.hmdp.entity.Shop;
 import com.hmdp.service.impl.ShopServiceImpl;
 import com.hmdp.utils.CacheClient;
-import com.hmdp.utils.RedisIdWorker;
+import com.hmdp.utils.RedisIsIdWorker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +14,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static com.hmdp.utils.RedisConstants.CACHE_SHOP_KEY;
-import static com.hmdp.utils.RedisConstants.CACHE_SHOP_TTL;
 
 @SpringBootTest
 class HmDianPingApplicationTests {
@@ -25,7 +24,7 @@ class HmDianPingApplicationTests {
     private CacheClient cacheClient;
 
     @Autowired
-    private RedisIdWorker redisIdWorker;
+    private RedisIsIdWorker redisIdWorker;
 
     private ExecutorService es = Executors.newFixedThreadPool(500);
 

@@ -30,10 +30,31 @@ public class CacheClient {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
+    /**
+     * 寫入 Redis(Redis設置過期時間，時間到會自動刪除)
+     *
+     * @param key
+     * @param value
+     * @param time
+     * @param unit
+     */
     public void set(String key, Object value, Long time, TimeUnit unit) {
         stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(value), time, unit);
     }
 
+    /**
+     * 寫入 Redis(手動填寫過期時間)
+     * JSON 格式
+     * {
+     * "data": {},
+     * "expireTime": 1760593309877
+     * }
+     *
+     * @param key
+     * @param value
+     * @param time
+     * @param unit
+     */
     public void setWithLogicalExpire(String key, Object value, Long time, TimeUnit unit) {
         // 設置邏輯過期
         RedisData redisData = new RedisData();
@@ -43,6 +64,19 @@ public class CacheClient {
         stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(redisData));
     }
 
+    /**
+     * 解決緩存穿透
+     *
+     * @param keyPrefix
+     * @param id
+     * @param type
+     * @param dbFallback
+     * @param time
+     * @param unit
+     * @param <R>
+     * @param <ID>
+     * @return
+     */
     public <R, ID> R queryWithPassThrough(
             String keyPrefix, ID id, Class<R> type, Function<ID, R> dbFallback, Long time, TimeUnit unit) {
         String key = keyPrefix + id;
@@ -71,7 +105,18 @@ public class CacheClient {
         return r;
     }
 
-
+    /**
+     * 解決緩存擊穿
+     * @param keyPrefix
+     * @param id
+     * @param type
+     * @param dbFallback
+     * @param time
+     * @param unit
+     * @param <R>
+     * @param <ID>
+     * @return
+     */
     public <R, ID> R queryWithLogicalExpire(
             String keyPrefix, ID id, Class<R> type, Function<ID, R> dbFallback, Long time, TimeUnit unit) {
         String key = keyPrefix + id;
@@ -117,11 +162,20 @@ public class CacheClient {
         return r;
     }
 
+    /**
+     * 開啟互斥鎖
+     * @param key
+     * @return
+     */
     private boolean tryLock(String key) {
         Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(key, "1", 10, TimeUnit.SECONDS);
         return BooleanUtil.isTrue(flag);
     }
 
+    /**
+     * 釋放互斥鎖
+     * @param key
+     */
     private void unlock(String key) {
         stringRedisTemplate.delete(key);
     }
