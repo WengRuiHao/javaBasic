@@ -111,6 +111,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 ---
 
 ## 分布式鎖
+[示範如何使用 Redis 分布式鎖](../../../hm-dianping/src/main/java/com/hmdp/utils/SimpleRedisLock.java)
 ![Redis優惠券秒殺_11.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_11.png)
 ![Redis優惠券秒殺_12.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_12.png)
 ![Redis優惠券秒殺_13.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_13.png)
@@ -125,5 +126,9 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 ### 解決方法:
 - 在釋放鎖時，檢查Redis的鎖是否是當前的線程就能解決這個問題
 ![Redis優惠券秒殺_16.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_16.png)
+![Redis優惠券秒殺_17.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_17.png)
+![Redis優惠券秒殺_18.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_18.png)
+![Redis優惠券秒殺_19.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_19.png)
+
 
 ---
