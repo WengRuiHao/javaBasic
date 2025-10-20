@@ -109,3 +109,21 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 ![Redis優惠券秒殺_10.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_10.png)
 
 ---
+
+## 分布式鎖
+![Redis優惠券秒殺_11.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_11.png)
+![Redis優惠券秒殺_12.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_12.png)
+![Redis優惠券秒殺_13.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_13.png)
+![Redis優惠券秒殺_14.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_14.png)
+### 基於 Redis 分布式鎖可能發生線程併發安全問題
+![Redis優惠券秒殺_15.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_15.png)
+- 1.**線程1**因為**業務邏輯阻塞**導致Redis鎖超時釋放
+- 2.同時**線程2**進來獲取鎖，由於**線程1**鎖已經釋放了，**線程2**獲取鎖成功
+- 3.這時**線程1**完成業務邏輯，去釋放鎖。(會釋放到**線程2**的鎖)
+- 4.同時**線程3**進來獲取鎖，**線程1**把**線程2**的鎖釋放，**線程3**獲取鎖成功
+- 5.進而發生出線程線程併發案權的問題
+### 解決方法:
+- 在釋放鎖時，檢查Redis的鎖是否是當前的線程就能解決這個問題
+![Redis優惠券秒殺_16.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_16.png)
+
+---
