@@ -130,5 +130,11 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 ![Redis優惠券秒殺_18.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_18.png)
 ![Redis優惠券秒殺_19.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_19.png)
 
+---
+
+## 基於Redis 的分布式鎖優化
+**快速開發可以使用現有的分布式框架去實現分布式鎖(Redisson)**
+![Redis優惠券秒殺_20.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_20.png)
+![Redis優惠券秒殺_21.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_21.png)
 
 ---
