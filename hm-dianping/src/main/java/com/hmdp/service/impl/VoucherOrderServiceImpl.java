@@ -11,6 +11,8 @@ import com.hmdp.utils.ILock;
 import com.hmdp.utils.RedisIsIdWorker;
 import com.hmdp.utils.SimpleRedisLock;
 import com.hmdp.utils.UserHolder;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -39,6 +41,9 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    private RedissonClient redissonClient;
+
     @Override
     public Result seckillVoucher(Long voucherId) {
         // 1. 查詢優惠券
@@ -61,9 +66,11 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 
         Long userId = UserHolder.getUser().getId();
         // 創建鎖對象
-        SimpleRedisLock lock = new SimpleRedisLock("order:" + userId, stringRedisTemplate);
+//        SimpleRedisLock lock = new SimpleRedisLock("order:" + userId, stringRedisTemplate); // 自定義 Redis 分布式鎖
+        RLock lock = redissonClient.getLock("order:" + userId); // Redisson 提供的分布式鎖
         // 獲取鎖
-        boolean isLock = lock.tryLock(1200);
+//        boolean isLock = lock.tryLock(1200);
+        boolean isLock = lock.tryLock(); //有2種類型: 無參數-失敗後立刻返回 2個參數-設定超時時間釋放
         // 判斷是否獲取鎖成功
         if (!isLock) {
             // 獲取鎖失敗, 返回錯誤或重試

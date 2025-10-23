@@ -136,5 +136,20 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 **快速開發可以使用現有的分布式框架去實現分布式鎖(Redisson)**
 ![Redis優惠券秒殺_20.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_20.png)
 ![Redis優惠券秒殺_21.png](../../picture/Redis%E5%84%AA%E6%83%A0%E5%88%B8%E7%A7%92%E6%AE%BA_21.png)
+### Redisson 快速入門
+[Redisson配置](../../../hm-dianping/src/main/java/com/hmdp/config/RedissonConfig.java)  
+[Redisson實現方式](../../../hm-dianping/src/main/java/com/hmdp/service/impl/VoucherOrderServiceImpl.java)
+![Redisson.png](../../picture/Redisson.png)
+![Redisson_1.png](../../picture/Redisson_1.png)
+### Redisson 可重入鎖原理
+![Redisson_2.png](../../picture/Redisson_2.png)
+![Redisson_3.png](../../picture/Redisson_3.png)
+![Redisson_4.png](../../picture/Redisson_4.png)
+![Redisson_5.png](../../picture/Redisson_5.png)
+### Redisson 連鎖
+**原理: 建立3個 Redis。必須一次寫入進去3個節點必須獲得鎖才代表成功並且要三個都必須釋放鎖成功才代表成功。  
+  當其中一個的 Redis節點 當機導致失效，那整個釋放鎖就會顯示失敗，解決了分布是鎖的一致性問題。**
+![Redisson_7.png](../../picture/Redisson_7.png)
+![Redisson_6.png](../../picture/Redisson_6.png)
 
 ---
