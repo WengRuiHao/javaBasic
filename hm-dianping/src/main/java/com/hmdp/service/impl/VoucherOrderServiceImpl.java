@@ -64,32 +64,23 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
             return Result.fail("庫存不足");
         }
 
-        Long userId = UserHolder.getUser().getId();
-        // 創建鎖對象
-//        SimpleRedisLock lock = new SimpleRedisLock("order:" + userId, stringRedisTemplate); // 自定義 Redis 分布式鎖
-        RLock lock = redissonClient.getLock("order:" + userId); // Redisson 提供的分布式鎖
-        // 獲取鎖
-//        boolean isLock = lock.tryLock(1200);
-        boolean isLock = lock.tryLock(); //有2種類型: 無參數-失敗後立刻返回 2個參數-設定超時時間釋放
-        // 判斷是否獲取鎖成功
-        if (!isLock) {
-            // 獲取鎖失敗, 返回錯誤或重試
-            return  Result.fail("不允許重複下單");
-        }
-        try {
-            // 獲取代理對象(事務)
-            IVoucherOrderService proxy = (IVoucherOrderService) AopContext.currentProxy();
-            return proxy.createVoucherOrder(voucherId);
-        } finally {
-            // 釋放鎖
-            lock.unlock();
-        }
+        return createVoucherOrder(voucherId);
     }
 
     @Transactional
     public Result createVoucherOrder(Long voucherId) {
         // 5. 一人一單
         Long userId = UserHolder.getUser().getId();
+
+        // 創建鎖對象
+        RLock lock = redissonClient.getLock("order:" + userId); // Redisson 提供的分布式鎖
+        // 獲取鎖
+        boolean isLock = lock.tryLock(); //有2種類型: 無參數-失敗後立刻返回 2個參數-設定超時時間釋放
+        // 判斷是否獲取鎖成功
+        if (!isLock) {
+            // 獲取鎖失敗, 返回錯誤或重試
+            return Result.fail("不允許重複下單");
+        }
 
         // 5.1. 查詢訂單
         int count = query().eq("user_id", userId).eq("voucher_id", voucherId).count();
