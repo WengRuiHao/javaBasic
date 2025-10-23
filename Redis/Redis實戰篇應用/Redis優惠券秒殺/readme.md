@@ -157,8 +157,11 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 ## Redis 秒殺優化
 **優化原理:把判斷秒殺庫存跟校宴一人一單的邏輯放入Lua腳本去執行Redis資料庫操作，用數字0,1,2表示狀態是否下單成功，
 並且開啟另一個線程將 優惠券id,用戶id和訂單id存入阻塞對列可以異步下單同時返回給前端。**  
+[示範的LUA腳本](../../../hm-dianping/src/main/resources/seckill.lua)  
+[示範的程式碼](../../../hm-dianping/src/main/java/com/hmdp/service/impl/VoucherOrderServiceImpl.java)
 ### 優化前:
 ![Redisson_10.png](../../picture/Redisson_10.png)
 ### 優化後:
 ![Redisson_8.png](../../picture/Redisson_8.png)
 ![Redisson_9.png](../../picture/Redisson_9.png)
+![Redisson_11.png](../../picture/Redisson_11.png)
