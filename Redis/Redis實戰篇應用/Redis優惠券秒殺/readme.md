@@ -165,3 +165,18 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 ![Redisson_8.png](../../picture/Redisson_8.png)
 ![Redisson_9.png](../../picture/Redisson_9.png)
 ![Redisson_11.png](../../picture/Redisson_11.png)
+
+---
+
+## Redis 消息對列(Message Queue)
+![Redis_MQ.png](../../picture/Redis_MQ.png)
+![Redis_MQ_1.png](../../picture/Redis_MQ_1.png)
+![Redis_MQ_2.png](../../picture/Redis_MQ_2.png)
+![Redis_MQ_3.png](../../picture/Redis_MQ_3.png)
+![Redis_MQ_4.png](../../picture/Redis_MQ_4.png)
+![Redis_MQ_5.png](../../picture/Redis_MQ_5.png)
+![Redis_MQ_6.png](../../picture/Redis_MQ_6.png)
+![Redis_MQ_7.png](../../picture/Redis_MQ_7.png)
+![Redis_MQ_8.png](../../picture/Redis_MQ_8.png)
+![Redis_MQ_9.png](../../picture/Redis_MQ_9.png)
+![Redis_MQ_10.png](../../picture/Redis_MQ_10.png)
