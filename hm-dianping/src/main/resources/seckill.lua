@@ -3,6 +3,8 @@
 local voucherId = ARGV[1]
 -- 1.2 用戶id
 local userId = ARGV[2]
+-- 1.3 訂單id
+local orderId = ARGV[3]
 
 -- 2. 資料key
 -- 2.1 庫存key
@@ -25,4 +27,6 @@ end
 redis.call('incrby', stockKey, -1)
 -- 3.5 下單(保存用戶) sadd orderKey userId
 redis.call('sadd', OrderKey, userId)
+-- 3.6 發送消息到對列中， xadd stream.orders * k1 v1 k2 v2 ...
+redis.call('xadd', 'stream.orders', '*', 'userId', userId, 'voucherId', voucherId, 'id', orderId)
 return 0

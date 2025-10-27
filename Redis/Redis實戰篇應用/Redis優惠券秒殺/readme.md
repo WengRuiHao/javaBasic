@@ -180,3 +180,12 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 ![Redis_MQ_8.png](../../picture/Redis_MQ_8.png)
 ![Redis_MQ_9.png](../../picture/Redis_MQ_9.png)
 ![Redis_MQ_10.png](../../picture/Redis_MQ_10.png)
+**用JAVA實現的原理**
+- 1.正常情況:用 Redis 指令讀取到消息，並且取得 msg 不為空直在執行 XACK確認消息，  
+把PENDINGLIST裡確認過的消息拿掉
+- 2.異常情況:當取得消息時發生異常，還沒執行 XACK 跳入到 catch裡面 再次執行 Redis 指令 
+取得已得到消息但還沒確認的消息，再次執行 XACK 確認消息。
+![Redis_MQ_11.png](../../picture/Redis_MQ_11.png)
+
+![Redis_MQ_12.png](../../picture/Redis_MQ_12.png)
+![Redis_MQ_13.png](../../picture/Redis_MQ_13.png)
